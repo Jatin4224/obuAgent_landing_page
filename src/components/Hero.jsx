@@ -5,6 +5,7 @@ import EyeParticles from "./EyeParticles.jsx";
 import FoxParticles from "./FoxParticles.jsx";
 import HeroAutoManifesto from "./HeroAutoManifesto.jsx";
 import HeroObuVideoFlyIn from "./HeroObuVideoFlyIn.jsx";
+import HeroParticleHandoff from "./HeroParticleHandoff.jsx";
 import WorkspacePowerOverlay from "./WorkspacePowerOverlay.jsx";
 
 function CinematicCamera() {
@@ -20,15 +21,17 @@ function CinematicCamera() {
   return null;
 }
 
-export default function Hero() {
+export default function Hero({ nextSectionRef }) {
   const sectionRef = useRef(null);
   const wakeProgressRef = useRef(0);
   const pullBackRef = useRef(0);
   const bodyRevealRef = useRef(0);
   const productIntroRef = useRef(0);
+  const handoffRef = useRef(0);
+  const videoPlayerRef = useRef(null);
 
   return (
-    <section ref={sectionRef} className="relative isolate z-0 h-[1720vh] bg-black">
+    <section ref={sectionRef} className="relative isolate z-0 h-[1900vh] bg-black">
       <div className="sticky top-0 h-screen w-screen overflow-hidden bg-black">
         {/* 2. PLACED BEHIND: Rendered the text streams first with a lower z-index */}
         <div className="absolute inset-0 z-10 pointer-events-none">
@@ -53,7 +56,11 @@ export default function Hero() {
         >
           {/* Note: Removed the solid black curtain color attachment so layers underneath peek through */}
           <CinematicCamera />
-          <BodyRunParticles bodyRevealRef={bodyRevealRef} productIntroRef={productIntroRef} />
+          <BodyRunParticles
+            bodyRevealRef={bodyRevealRef}
+            productIntroRef={productIntroRef}
+            handoffRef={handoffRef}
+          />
           <FoxParticles
             wakeProgressRef={wakeProgressRef}
             dissolveRef={pullBackRef}
@@ -65,8 +72,14 @@ export default function Hero() {
         </Canvas>
 
         <div className="pointer-events-none absolute inset-0 z-[25] bg-[radial-gradient(circle_at_50%_48%,transparent_0%,rgba(0,0,0,0.1)_45%,rgba(0,0,0,0.82)_92%)]" />
-        <HeroObuVideoFlyIn rootRef={sectionRef} />
+        <HeroObuVideoFlyIn ref={videoPlayerRef} rootRef={sectionRef} />
         <HeroAutoManifesto rootRef={sectionRef} productIntroRef={productIntroRef} />
+        <HeroParticleHandoff
+          rootRef={sectionRef}
+          handoffRef={handoffRef}
+          videoPlayerRef={videoPlayerRef}
+          nextSectionRef={nextSectionRef}
+        />
       </div>
     </section>
   );

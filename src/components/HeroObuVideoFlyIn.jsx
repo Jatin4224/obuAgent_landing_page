@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import obuVideo from "../assets/obu-working-phone.mp4";
@@ -12,8 +12,10 @@ const lineDuration = fadeInDuration + holdDuration + fadeOutDuration;
 const manifestoScrollLength = 13.2;
 const finalLineStart = lineDuration * 5;
 
-export default function HeroObuVideoFlyIn({ rootRef }) {
+const HeroObuVideoFlyIn = forwardRef(function HeroObuVideoFlyIn({ rootRef }, ref) {
   const videoCardRef = useRef(null);
+
+  useImperativeHandle(ref, () => videoCardRef.current);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -80,4 +82,6 @@ export default function HeroObuVideoFlyIn({ rootRef }) {
       <div className="pointer-events-none absolute bottom-[4%] right-[3%] h-9 w-12 rounded-full bg-black md:h-11 md:w-14" />
     </div>
   );
-}
+});
+
+export default HeroObuVideoFlyIn;

@@ -28,3 +28,15 @@ canvas {
   background: rgba(255, 138, 61, 0.35);
   color: #fff;
 }
+
+@keyframes obu-dust-float {
+  0% {
+    transform: translate3d(-1.5%, 4%, 0) scale(1);
+    background-position: 46% 56%, 51% 62%, 55% 58%, 42% 65%, 58% 70%, 50% 76%;
+  }
+
+  100% {
+    transform: translate3d(1.5%, -4%, 0) scale(1.06);
+    background-position: 50% 50%, 47% 57%, 60% 53%, 45% 59%, 54% 64%, 55% 70%;
+  }
+}

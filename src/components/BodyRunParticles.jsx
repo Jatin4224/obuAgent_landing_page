@@ -40,7 +40,7 @@ const fragmentShader = `
   }
 `;
 
-export default function BodyRunParticles({ bodyRevealRef, productIntroRef }) {
+export default function BodyRunParticles({ bodyRevealRef, productIntroRef, handoffRef }) {
   const groupRef = useRef();
   const bodyMaterialRef = useRef();
   const projectionVector = useRef(new THREE.Vector3());
@@ -105,6 +105,7 @@ export default function BodyRunParticles({ bodyRevealRef, productIntroRef }) {
     const elapsed = clock.getElapsedTime();
     const reveal = bodyRevealRef?.current ?? 0;
     const intro = productIntroRef?.current ?? 0;
+    const handoff = handoffRef?.current ?? 0;
     const positions = geometry.attributes.position.array;
     const { standing, count } = particleData;
     mouse.current.lerp(mouseTarget.current, 0.14);
@@ -124,6 +125,13 @@ export default function BodyRunParticles({ bodyRevealRef, productIntroRef }) {
       let tx = sx + breathe + tailWave + driftX;
       let ty = sy + driftY;
       let tz = sz + Math.cos(elapsed * 1.6 + seed) * 0.025;
+      const handoffEase = handoff * handoff * (3 - 2 * handoff);
+
+      if (handoffEase > 0) {
+        tx += simplexLike(seed, sx * 0.16, elapsed * 0.08) * handoffEase * 0.36;
+        ty -= (0.52 + random(seed + 5.7) * 0.58) * handoffEase;
+        tz += simplexLike(sy * 0.22, seed, elapsed * 0.12) * handoffEase * 0.5;
+      }
 
       const ndc = worldToNdc(tx, ty, tz, groupRef.current, camera, projectionVector.current);
       const dx = ndc.x - mouse.current.x;
@@ -149,20 +157,21 @@ export default function BodyRunParticles({ bodyRevealRef, productIntroRef }) {
       const fitScale = Math.min(1, viewport.width / 8.2, viewport.height / 6.4);
       const zoomScale = THREE.MathUtils.lerp(0.72, 0.88, reveal);
       const retreatScale = THREE.MathUtils.lerp(1, 0.35, intro);
-      const scale = fitScale * zoomScale * retreatScale;
+      const handoffScale = THREE.MathUtils.lerp(1, 0.94, handoff);
+      const scale = fitScale * zoomScale * retreatScale * handoffScale;
       const settleX = 0.08;
       const settleY = -0.72;
 
       groupRef.current.position.x = settleX;
-      groupRef.current.position.y = settleY + Math.sin(elapsed * 0.9) * 0.035 * reveal;
+      groupRef.current.position.y = settleY + Math.sin(elapsed * 0.9) * 0.035 * reveal - handoff * 0.22;
       groupRef.current.position.z = -0.72 - intro * 1.5;
       groupRef.current.scale.setScalar(scale);
       groupRef.current.rotation.z = 0;
     }
 
     if (bodyMaterialRef.current) {
-      bodyMaterialRef.current.uniforms.uOpacity.value = reveal * THREE.MathUtils.lerp(1, 0.3, intro);
-      bodyMaterialRef.current.uniforms.uSoftness.value = intro;
+      bodyMaterialRef.current.uniforms.uOpacity.value = reveal * THREE.MathUtils.lerp(1, 0.3, intro) * (1 - handoff * 0.72);
+      bodyMaterialRef.current.uniforms.uSoftness.value = Math.min(1, intro + handoff * 0.55);
     }
   });
 
