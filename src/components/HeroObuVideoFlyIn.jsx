@@ -77,6 +77,7 @@ export default function HeroObuVideoFlyIn({ rootRef }) {
         preload="auto"
         className="h-full w-full object-cover"
       />
+      <div className="pointer-events-none absolute bottom-[4%] right-[3%] h-9 w-12 rounded-full bg-black md:h-11 md:w-14" />
     </div>
   );
 }
