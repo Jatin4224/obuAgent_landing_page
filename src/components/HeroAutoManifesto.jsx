@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import HeroHighlightedText from "./HeroHighlightedText.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,6 +14,12 @@ const textGroups = [
   "An agent that understands\nhow you actually work.",
 ];
 
+const fadeInDuration = 0.65;
+const holdDuration = 4;
+const fadeOutDuration = 0.65;
+const lineDuration = fadeInDuration + holdDuration + fadeOutDuration;
+const manifestoScrollLength = 13.2;
+
 export default function HeroAutoManifesto({ rootRef, productIntroRef }) {
   const root = useRef(null);
   const groupRefs = useRef([]);
@@ -24,41 +31,77 @@ export default function HeroAutoManifesto({ rootRef, productIntroRef }) {
         y: 100,
         opacity: 0,
         filter: "blur(10px)",
+        color: "rgba(255,255,255,0.18)",
+        textShadow: "0 0 0 rgba(255,255,255,0)",
       });
 
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: rootRef.current,
           start: () => `top+=${window.innerHeight * 2.95} top`,
-          end: () => `+=${window.innerHeight * 2.35}`,
+          end: () => `+=${window.innerHeight * manifestoScrollLength}`,
           scrub: true,
           invalidateOnRefresh: true,
         },
       });
 
-      timeline.to(productIntroRef, {
-        current: 1,
-        duration: textGroups.length * 0.9,
-        ease: "none",
-      }, 0);
+      timeline.to(
+        productIntroRef,
+        {
+          current: 1,
+          duration: textGroups.length * lineDuration,
+          ease: "none",
+        },
+        0,
+      );
 
       groupRefs.current.forEach((group, index) => {
-        const at = index * 0.82;
+        const at = index * lineDuration;
         timeline
-          .to(group, {
-            y: 0,
-            opacity: 1,
-            filter: "blur(0px)",
-            duration: 0.42,
-            ease: "none",
-          }, at)
-          .to(group, {
-            y: -100,
-            opacity: 0,
-            filter: "blur(8px)",
-            duration: 0.48,
-            ease: "none",
-          }, at + 0.42);
+          .to(
+            group,
+            {
+              y: 0,
+              opacity: 1,
+              filter: "blur(0px)",
+              color: "rgba(255,255,255,0.96)",
+              textShadow:
+                "0 0 18px rgba(255,255,255,0.68), 0 0 42px rgba(196,181,253,0.28)",
+              duration: fadeInDuration,
+              ease: "none",
+              overwrite: "auto",
+            },
+            at,
+          )
+          .to(
+            group,
+            {
+              y: 0,
+              opacity: 1,
+              filter: "blur(0px)",
+              color: "rgba(255,255,255,0.96)",
+              textShadow:
+                "0 0 18px rgba(255,255,255,0.68), 0 0 42px rgba(196,181,253,0.28)",
+              duration: holdDuration,
+              ease: "none",
+              overwrite: "auto",
+            },
+            at + fadeInDuration,
+          )
+          .to(
+            group,
+            {
+              y: -100,
+              opacity: 0,
+              filter: "blur(8px)",
+              color: "rgba(255,255,255,0.12)",
+              textShadow: "0 0 0 rgba(255,255,255,0)",
+              duration: fadeOutDuration,
+              ease: "none",
+              overwrite: "auto",
+            },
+            at + fadeInDuration + holdDuration,
+          );
       });
     }, root);
 
@@ -80,7 +123,7 @@ export default function HeroAutoManifesto({ rootRef, productIntroRef }) {
           }}
           className="absolute mx-auto max-w-[920px] whitespace-pre-line opacity-0"
           style={{
-            color: "#FFFFFF",
+            color: "rgba(255,255,255,0.52)",
             fontFamily:
               '"Gilroy Light", "Gilroy Regular", Gilroy, Inter, ui-sans-serif, system-ui, sans-serif',
             fontSize: "clamp(2rem, 5vw, 5rem)",
@@ -88,10 +131,10 @@ export default function HeroAutoManifesto({ rootRef, productIntroRef }) {
             lineHeight: 1.08,
             letterSpacing: "-0.025em",
             textShadow:
-              "0 0 14px rgba(255,255,255,0.72), 0 0 34px rgba(255,244,232,0.46), 0 0 70px rgba(255,186,122,0.28), 0 0 104px rgba(196,181,253,0.24)",
+              "0 0 18px rgba(255,255,255,0.22), 0 0 56px rgba(196,181,253,0.16)",
           }}
         >
-          {group}
+          <HeroHighlightedText>{group}</HeroHighlightedText>
         </div>
       ))}
     </div>

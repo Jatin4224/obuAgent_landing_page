@@ -54,30 +54,42 @@ export default function ManifestoChapter() {
       timeline
         .to(curtainRef.current, { opacity: 1, duration: 0.9, ease: "none" }, 0)
         .to(bodyRevealRef, { current: 1, duration: 0.9, ease: "none" }, 0.05)
-        .to(productIntroRef, {
-          current: 1,
-          duration: textGroups.length * 0.9,
-          ease: "none",
-        }, 0.85);
+        .to(
+          productIntroRef,
+          {
+            current: 1,
+            duration: textGroups.length * 0.9,
+            ease: "none",
+          },
+          0.85,
+        );
 
       textGroups.forEach((_, index) => {
         const group = groupRefs.current[index];
         const at = 0.95 + index * 0.82;
         timeline
-          .to(group, {
-            y: 0,
-            opacity: 1,
-            filter: "blur(0px)",
-            duration: 0.42,
-            ease: "power2.out",
-          }, at)
-          .to(group, {
-            y: -100,
-            opacity: 0,
-            filter: "blur(8px)",
-            duration: 0.48,
-            ease: "power2.in",
-          }, at + 0.42);
+          .to(
+            group,
+            {
+              y: 0,
+              opacity: 1,
+              filter: "blur(0px)",
+              duration: 0.42,
+              ease: "power2.out",
+            },
+            at,
+          )
+          .to(
+            group,
+            {
+              y: -100,
+              opacity: 0,
+              filter: "blur(8px)",
+              duration: 0.48,
+              ease: "power2.in",
+            },
+            at + 0.42,
+          );
       });
     }, sectionRef);
 
@@ -85,17 +97,30 @@ export default function ManifestoChapter() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative isolate z-10 h-[460vh] overflow-visible">
+    <section
+      ref={sectionRef}
+      className="relative isolate z-10 h-[460vh] overflow-visible"
+    >
       <div className="sticky top-0 h-screen overflow-hidden">
-        <div ref={curtainRef} className="absolute inset-0 z-0 bg-black opacity-0" />
+        <div
+          ref={curtainRef}
+          className="absolute inset-0 z-0 bg-black opacity-0"
+        />
         <Canvas
           className="absolute inset-0 z-10 h-full w-full"
           camera={{ position: [0, 0, 8.6], fov: 43, near: 0.1, far: 100 }}
           dpr={[1, 1.75]}
-          gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
+          gl={{
+            antialias: false,
+            alpha: true,
+            powerPreference: "high-performance",
+          }}
         >
           <ChapterCamera />
-          <BodyRunParticles bodyRevealRef={bodyRevealRef} productIntroRef={productIntroRef} />
+          <BodyRunParticles
+            bodyRevealRef={bodyRevealRef}
+            productIntroRef={productIntroRef}
+          />
         </Canvas>
 
         <div className="pointer-events-none absolute inset-0 z-[15] bg-[radial-gradient(circle_at_50%_50%,transparent_0%,rgba(0,0,0,0.18)_45%,rgba(0,0,0,0.9)_95%)]" />
