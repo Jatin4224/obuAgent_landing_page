@@ -13,11 +13,12 @@ const vertexShader = `
   varying vec3 vColor;
   varying float vAlpha;
   uniform float uOpacity;
+  uniform float uSoftness;
 
   void main() {
     vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
     gl_Position = projectionMatrix * mvPosition;
-    gl_PointSize = aSize * (10.4 / max(-mvPosition.z, 2.2));
+    gl_PointSize = aSize * (10.4 + uSoftness * 2.0) / max(-mvPosition.z, 2.2);
     vColor = aColor;
     vAlpha = uOpacity * (0.76 + smoothstep(1.0, 2.8, aSize) * 0.22);
   }
@@ -26,21 +27,23 @@ const vertexShader = `
 const fragmentShader = `
   varying vec3 vColor;
   varying float vAlpha;
+  uniform float uSoftness;
 
   void main() {
     vec2 uv = gl_PointCoord - vec2(0.5);
     float d = length(uv);
     float dotShape = smoothstep(0.5, 0.12, d);
-    float glow = smoothstep(0.5, 0.0, d) * 0.32;
+    float glow = smoothstep(0.5, 0.0, d) * (0.32 + uSoftness * 0.18);
     float alpha = (dotShape + glow) * vAlpha;
     if (alpha < 0.02) discard;
     gl_FragColor = vec4(vColor * 1.04, alpha);
   }
 `;
 
-export default function BodyRunParticles({ bodyRevealRef }) {
+export default function BodyRunParticles({ bodyRevealRef, productIntroRef }) {
   const groupRef = useRef();
   const bodyMaterialRef = useRef();
+  const projectionVector = useRef(new THREE.Vector3());
   const mouse = useRef(new THREE.Vector2(9, 9));
   const mouseTarget = useRef(new THREE.Vector2(9, 9));
   const { gl, viewport, camera } = useThree();
@@ -94,13 +97,14 @@ export default function BodyRunParticles({ bodyRevealRef }) {
     return bufferGeometry;
   }, [particleData]);
 
-  const uniforms = useMemo(() => ({ uOpacity: { value: 0 } }), []);
+  const uniforms = useMemo(() => ({ uOpacity: { value: 0 }, uSoftness: { value: 0 } }), []);
 
   useFrame(({ clock }) => {
     if (!particleData || !geometry) return;
 
     const elapsed = clock.getElapsedTime();
     const reveal = bodyRevealRef?.current ?? 0;
+    const intro = productIntroRef?.current ?? 0;
     const positions = geometry.attributes.position.array;
     const { standing, count } = particleData;
     mouse.current.lerp(mouseTarget.current, 0.14);
@@ -121,7 +125,7 @@ export default function BodyRunParticles({ bodyRevealRef }) {
       let ty = sy + driftY;
       let tz = sz + Math.cos(elapsed * 1.6 + seed) * 0.025;
 
-      const ndc = worldToNdc(tx, ty, tz, groupRef.current, camera);
+      const ndc = worldToNdc(tx, ty, tz, groupRef.current, camera, projectionVector.current);
       const dx = ndc.x - mouse.current.x;
       const dy = ndc.y - mouse.current.y;
       const dist = Math.sqrt(dx * dx + dy * dy) + 0.0001;
@@ -144,19 +148,21 @@ export default function BodyRunParticles({ bodyRevealRef }) {
     if (groupRef.current) {
       const fitScale = Math.min(1, viewport.width / 8.2, viewport.height / 6.4);
       const zoomScale = THREE.MathUtils.lerp(0.72, 0.88, reveal);
-      const scale = fitScale * zoomScale;
+      const retreatScale = THREE.MathUtils.lerp(1, 0.35, intro);
+      const scale = fitScale * zoomScale * retreatScale;
       const settleX = 0.08;
       const settleY = -0.72;
 
       groupRef.current.position.x = settleX;
       groupRef.current.position.y = settleY + Math.sin(elapsed * 0.9) * 0.035 * reveal;
-      groupRef.current.position.z = -0.72;
+      groupRef.current.position.z = -0.72 - intro * 1.5;
       groupRef.current.scale.setScalar(scale);
       groupRef.current.rotation.z = 0;
     }
 
     if (bodyMaterialRef.current) {
-      bodyMaterialRef.current.uniforms.uOpacity.value = reveal;
+      bodyMaterialRef.current.uniforms.uOpacity.value = reveal * THREE.MathUtils.lerp(1, 0.3, intro);
+      bodyMaterialRef.current.uniforms.uSoftness.value = intro;
     }
   });
 
@@ -220,8 +226,8 @@ function random(value) {
   return raw - Math.floor(raw);
 }
 
-function worldToNdc(x, y, z, group, camera) {
-  const vector = new THREE.Vector3(x, y, z);
+function worldToNdc(x, y, z, group, camera, vector) {
+  vector.set(x, y, z);
   if (group) group.localToWorld(vector);
   vector.project(camera);
   return vector;

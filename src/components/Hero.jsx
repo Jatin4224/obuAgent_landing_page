@@ -3,7 +3,7 @@ import { useRef } from "react";
 import BodyRunParticles from "./BodyRunParticles.jsx";
 import EyeParticles from "./EyeParticles.jsx";
 import FoxParticles from "./FoxParticles.jsx";
-import HeroTextReveal from "./HeroTextReveal.jsx";
+import HeroAutoManifesto from "./HeroAutoManifesto.jsx";
 import WorkspacePowerOverlay from "./WorkspacePowerOverlay.jsx";
 
 function CinematicCamera() {
@@ -24,9 +24,10 @@ export default function Hero() {
   const wakeProgressRef = useRef(0);
   const pullBackRef = useRef(0);
   const bodyRevealRef = useRef(0);
+  const productIntroRef = useRef(0);
 
   return (
-    <section ref={sectionRef} className="relative h-[380vh] bg-black">
+    <section ref={sectionRef} className="relative isolate z-0 h-[560vh] bg-black">
       <div className="sticky top-0 h-screen w-screen overflow-hidden bg-black">
         {/* 2. PLACED BEHIND: Rendered the text streams first with a lower z-index */}
         <div className="absolute inset-0 z-10 pointer-events-none">
@@ -40,7 +41,7 @@ export default function Hero() {
 
         {/* 3. TRANSPARENT CANVAS: Configured with a higher z-index and alpha context */}
         <Canvas
-          className="h-full w-full relative z-20 pointer-events-none"
+          className="h-full w-full relative z-20"
           camera={{ position: [0, 0, 8.6], fov: 43, near: 0.1, far: 100 }}
           dpr={[1, 1.75]}
           gl={{
@@ -51,7 +52,7 @@ export default function Hero() {
         >
           {/* Note: Removed the solid black curtain color attachment so layers underneath peek through */}
           <CinematicCamera />
-          <BodyRunParticles bodyRevealRef={bodyRevealRef} />
+          <BodyRunParticles bodyRevealRef={bodyRevealRef} productIntroRef={productIntroRef} />
           <FoxParticles
             wakeProgressRef={wakeProgressRef}
             dissolveRef={pullBackRef}
@@ -62,12 +63,8 @@ export default function Hero() {
           />
         </Canvas>
 
-        <div className="pointer-events-none absolute inset-0 z-25 bg-[radial-gradient(circle_at_50%_48%,transparent_0%,rgba(0,0,0,0.1)_45%,rgba(0,0,0,0.82)_92%)]" />
-
-        {/* Foreground layout container holding the bottom title typography */}
-        <div className="absolute bottom-0 left-0 w-full z-30 pb-6 sm:pb-10 pointer-events-none">
-          <HeroTextReveal rootRef={sectionRef} />
-        </div>
+        <div className="pointer-events-none absolute inset-0 z-[25] bg-[radial-gradient(circle_at_50%_48%,transparent_0%,rgba(0,0,0,0.1)_45%,rgba(0,0,0,0.82)_92%)]" />
+        <HeroAutoManifesto rootRef={sectionRef} productIntroRef={productIntroRef} />
       </div>
     </section>
   );

@@ -123,10 +123,12 @@ export default function WorkspacePowerOverlay({
   }, []);
 
   useEffect(() => {
+    let ctx;
+    let onResize;
     const frameId = requestAnimationFrame(() => {
       rebuildPaths();
 
-      const ctx = gsap.context(() => {
+      ctx = gsap.context(() => {
         gsap.set(overlayRef.current, { opacity: 1 });
 
         activationOrder.forEach((id) => {
@@ -182,10 +184,10 @@ export default function WorkspacePowerOverlay({
         // 2. SCROLL REVEAL TIMELINE: Handles activation thresholds on scroll
         const timeline = gsap.timeline({
           scrollTrigger: {
-            trigger: rootRef.current,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 0.5,
+          trigger: rootRef.current,
+          start: "top top",
+          end: () => `+=${window.innerHeight * 2.8}`,
+          scrub: 0.5,
           },
         });
 
@@ -263,19 +265,18 @@ export default function WorkspacePowerOverlay({
           );
       }, overlayRef);
 
-      const onResize = () => {
+      onResize = () => {
         rebuildPaths();
         ScrollTrigger.refresh();
       };
       window.addEventListener("resize", onResize);
-
-      return () => {
-        ctx.revert();
-        window.removeEventListener("resize", onResize);
-      };
     });
 
-    return () => cancelAnimationFrame(frameId);
+    return () => {
+      cancelAnimationFrame(frameId);
+      if (ctx) ctx.revert();
+      if (onResize) window.removeEventListener("resize", onResize);
+    };
   }, [rootRef, wakeProgressRef, pullBackRef, bodyRevealRef, rebuildPaths]);
 
   return (

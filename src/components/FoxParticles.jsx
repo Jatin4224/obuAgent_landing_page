@@ -39,6 +39,7 @@ const fragmentShader = `
 export default function FoxParticles({ wakeProgressRef, dissolveRef }) {
   const pointsRef = useRef();
   const materialRef = useRef();
+  const projectionVector = useRef(new THREE.Vector3());
   const mouse = useRef(new THREE.Vector2(9, 9));
   const mouseTarget = useRef(new THREE.Vector2(9, 9));
   const { gl, viewport, camera } = useThree();
@@ -145,7 +146,7 @@ export default function FoxParticles({ wakeProgressRef, dissolveRef }) {
       const start = (1 - dissolveOrder[i]) * 0.62;
       const localDissolve = smoothstepRange(start, start + 0.42, dissolve);
 
-      const ndc = worldToNdc(tx, ty, tz, camera);
+      const ndc = worldToNdc(tx, ty, tz, camera, projectionVector.current);
       const dx = ndc.x - mouse.current.x;
       const dy = ndc.y - mouse.current.y;
       const dist = Math.sqrt(dx * dx + dy * dy) + 0.0001;
@@ -214,8 +215,8 @@ export default function FoxParticles({ wakeProgressRef, dissolveRef }) {
   );
 }
 
-function worldToNdc(x, y, z, camera) {
-  const vector = new THREE.Vector3(x, y, z);
+function worldToNdc(x, y, z, camera, vector) {
+  vector.set(x, y, z);
   vector.project(camera);
   return vector;
 }
