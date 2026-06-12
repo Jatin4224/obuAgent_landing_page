@@ -56,76 +56,80 @@ function StepCard({
   return (
     <section
       ref={(node) => setRowRef(node, index)}
-      className={`relative grid min-h-screen grid-cols-1 items-center gap-12 overflow-hidden border-b border-white/8 px-8 py-16 md:gap-10 md:px-16 lg:px-24 xl:px-32 ${
-        videoLeft ? "md:grid-cols-[66%_34%]" : "md:grid-cols-[34%_66%]"
-      }`}
+      className="relative flex min-h-screen items-center justify-center overflow-hidden border-b border-white/8 px-8 py-16 md:px-16 lg:px-24 xl:px-32"
     >
       <div
-        ref={(node) => setTextRef(node, index)}
-        className={`relative z-10 flex w-full max-w-[31rem] flex-col justify-center ${
-          videoLeft ? "md:order-2 md:mr-auto" : "md:ml-auto"
-        }`}
-      >
-        <h2
-          className="max-w-[31rem] text-white"
-          style={{
-            fontFamily: '"Outfit", sans-serif',
-            fontSize: "clamp(3rem, 5vw, 5.8rem)",
-            fontWeight: 300,
-            lineHeight: 0.92,
-            letterSpacing: "-0.02em",
-          }}
-        >
-          {step.title}
-        </h2>
-        <p className="mt-10 max-w-[25rem] text-lg leading-7 text-white/58 md:text-xl md:leading-8">
-          {step.body}
-        </p>
-      </div>
-
-      <div
-        className={`relative flex min-h-[58vh] items-center justify-center md:min-h-[78vh] ${
-          videoLeft ? "md:order-1" : ""
+        className={`grid w-full grid-cols-1 items-center gap-12 md:gap-10 ${
+          videoLeft ? "md:grid-cols-[66%_34%]" : "md:grid-cols-[34%_66%]"
         }`}
       >
         <div
-          ref={(node) => setVisualRef(node, index)}
-          className={`relative aspect-video w-full max-w-[56rem] will-change-[transform,opacity,filter]`}
+          ref={(node) => setTextRef(node, index)}
+          className={`relative z-10 flex w-full max-w-[31rem] flex-col justify-center ${
+            videoLeft ? "md:order-2 md:mr-auto" : "md:ml-auto"
+          }`}
         >
-          <video
-            src={step.video}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className="h-full w-full object-cover mix-blend-screen"
-          />
-          <div className="pointer-events-none absolute bottom-5 right-5 flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-2xl text-white backdrop-blur-md">
-            ||
-          </div>
+          <h2
+            className="max-w-[31rem] text-white"
+            style={{
+              fontFamily: '"Outfit", sans-serif',
+              fontSize: "clamp(3rem, 5vw, 5.8rem)",
+              fontWeight: 300,
+              lineHeight: 0.92,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            {step.title}
+          </h2>
+          <p className="mt-10 max-w-[25rem] text-lg leading-7 text-white/58 md:text-xl md:leading-8">
+            {step.body}
+          </p>
         </div>
 
-        <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 aspect-video w-full max-w-[56rem] -translate-x-1/2 -translate-y-1/2">
+        <div
+          className={`relative flex min-h-[58vh] items-center justify-center md:min-h-[78vh] ${
+            videoLeft ? "md:order-1" : ""
+          }`}
+        >
           <div
-            ref={(node) => setBadgeRef(node, index)}
-            className={`absolute top-1/2 flex h-16 w-28 items-center justify-center rounded-full bg-[#ff6045] text-3xl font-light text-white md:h-20 md:w-36 md:text-4xl ${
-              videoLeft ? "right-0" : "left-0"
-            }`}
+            ref={(node) => setVisualRef(node, index)}
+            className={`relative aspect-video w-full max-w-[56rem] will-change-[transform,opacity,filter]`}
           >
-            {step.number}
+            <video
+              src={step.video}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              className="h-full w-full object-cover mix-blend-screen"
+            />
+            <div className="pointer-events-none absolute bottom-13 right-15 flex h-14 w-14 items-center justify-center rounded-full bg-grey-800 text-2xl text-white backdrop-blur-md">
+              ||
+            </div>
           </div>
 
-          <div
-            ref={(node) => setPromptRef(node, index)}
-            className="absolute left-1/2 top-1/2 flex h-12 w-[70%] max-w-[34rem] items-center rounded-full bg-white px-7 text-black backdrop-blur-md"
-          >
-            <span className="truncate text-sm text-black/60 md:text-base">
-              {step.prompt}
-            </span>
-            <span className="ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#ff6045] text-white">
-              ?
-            </span>
+          <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 aspect-video w-full max-w-[56rem] -translate-x-1/2 -translate-y-1/2">
+            <div
+              ref={(node) => setBadgeRef(node, index)}
+              className={`absolute top-1/2 flex h-16 w-28 items-center justify-center rounded-full bg-[#ff6045] text-3xl font-light text-white md:h-20 md:w-36 md:text-4xl ${
+                videoLeft ? "right-0" : "left-0"
+              }`}
+            >
+              {step.number}
+            </div>
+
+            <div
+              ref={(node) => setPromptRef(node, index)}
+              className="absolute left-1/2 top-1/2 flex h-12 w-[70%] max-w-[34rem] items-center rounded-full bg-white px-7 text-black backdrop-blur-md"
+            >
+              <span className="truncate text-sm text-black/60 md:text-base">
+                {step.prompt}
+              </span>
+              <span className="ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#ff6045] text-white">
+                ?
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -135,6 +139,7 @@ function StepCard({
 
 const Nextcomponent = forwardRef(function Nextcomponent(_, ref) {
   const sectionRef = useRef(null);
+  const introCardRef = useRef(null);
 
   // Notice we removed introRef because the TextBlock component handles its own animations
   const rowRefs = useRef([]);
@@ -147,8 +152,43 @@ const Nextcomponent = forwardRef(function Nextcomponent(_, ref) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Removed all the old GSAP logic for the 3D Intro heading so it doesn't crash
-      // Step cards animation logic remains untouched
+      if (introCardRef.current) {
+        gsap.set(introCardRef.current.parentElement, {
+          perspective: 1200,
+          transformStyle: "preserve-3d",
+        });
+
+        gsap.fromTo(
+          introCardRef.current,
+          {
+            opacity: 0,
+            yPercent: 18,
+            z: -430,
+            rotationX: 42,
+            scale: 0.955,
+            filter: "blur(12px)",
+            transformOrigin: "center center",
+            transformStyle: "preserve-3d",
+          },
+          {
+            opacity: 1,
+            yPercent: 0,
+            z: 0,
+            rotationX: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: introCardRef.current.parentElement,
+              start: "top 86%",
+              end: "center center",
+              scrub: 1,
+              invalidateOnRefresh: true,
+            },
+          },
+        );
+      }
+
       rowRefs.current.forEach((row, index) => {
         const videoLeft = steps[index].videoSide === "left";
         const textDirection = videoLeft ? 1 : -1;
@@ -299,7 +339,10 @@ const Nextcomponent = forwardRef(function Nextcomponent(_, ref) {
         {/* NEW INTRO: Centered, Short, with TextBlock Effect */}
         <TextBlockEffect>
           <section className="relative flex min-h-screen w-full items-center justify-center overflow-hidden px-8">
-            <div className="max-w-4xl text-center text-4xl md:text-6xl lg:text-7xl">
+            <div
+              ref={introCardRef}
+              className="max-w-4xl text-center text-4xl md:text-6xl lg:text-7xl"
+            >
               <TextBlock
                 blockColor="#ff6045"
                 textColor="#ffffff"

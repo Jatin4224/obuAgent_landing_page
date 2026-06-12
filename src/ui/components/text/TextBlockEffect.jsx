@@ -41,6 +41,7 @@ export default function TextBlockEffect({
   children,
   className,
   triggerStart = "top 58%",
+  compact = false,
 }) {
   const containerRef = useRef(null);
   const splitInstancesRef = useRef([]);
@@ -150,7 +151,7 @@ export default function TextBlockEffect({
     <main
       ref={containerRef}
       className={cn(
-        "min-h-screen w-full overflow-x-hidden bg-black text-[#ededed]",
+        compact ? "w-full overflow-x-hidden bg-black text-[#ededed]" : "min-h-screen w-full overflow-x-hidden bg-black text-[#ededed]",
         className,
       )}
     >
