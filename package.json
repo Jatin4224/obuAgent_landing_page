@@ -5,16 +5,19 @@
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "@react-three/drei": "latest",
     "@react-three/fiber": "latest",
     "@react-three/postprocessing": "latest",
     "@tailwindcss/vite": "latest",
     "@vitejs/plugin-react": "latest",
     "gsap": "^3.15.0",
+    "lenis": "^1.3.23",
     "lucide-react": "latest",
     "motion": "^12.40.0",
-    "react": "latest",
+    "react": "^19.2.7",
     "react-dom": "latest",
+    "split-type": "^0.3.4",
     "tailwindcss": "latest",
     "three": "latest",
     "vite": "latest"

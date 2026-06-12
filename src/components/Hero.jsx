@@ -31,7 +31,7 @@ export default function Hero({ nextSectionRef }) {
   const videoPlayerRef = useRef(null);
 
   return (
-    <section ref={sectionRef} className="relative isolate z-0 h-[1900vh] bg-black">
+    <section ref={sectionRef} className="relative isolate z-0 h-[1850vh] bg-black">
       <div className="sticky top-0 h-screen w-screen overflow-hidden bg-black">
         {/* 2. PLACED BEHIND: Rendered the text streams first with a lower z-index */}
         <div className="absolute inset-0 z-10 pointer-events-none">
