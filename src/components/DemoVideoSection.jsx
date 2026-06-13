@@ -2,7 +2,9 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ElectricVideoCard from "./ElectricVideoCard.jsx";
-import TextBlockEffect, { TextBlock } from "../ui/components/text/TextBlockEffect.jsx";
+import TextBlockEffect, {
+  TextBlock,
+} from "../ui/components/text/TextBlockEffect.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,7 +68,11 @@ export default function DemoVideoSection() {
           <p className="mb-5 text-xs font-medium uppercase tracking-[0.44em] text-[#ffb28a]/70">
             Watch the workflow
           </p>
-          <TextBlockEffect compact className="bg-transparent" triggerStart="top 68%">
+          <TextBlockEffect
+            compact
+            className="bg-transparent"
+            triggerStart="top 68%"
+          >
             <section className="flex justify-center">
               <TextBlock
                 blockColor="#f7d84b"
@@ -87,6 +93,16 @@ export default function DemoVideoSection() {
         </div>
 
         <div ref={cardRef} className="mx-auto w-full max-w-[88rem]">
+          <div
+            className="pointer-events-none absolute inset-0 z-0 mt-40 opacity-40 "
+            style={{
+              backgroundImage: 'url("/assets/breaking-texture.png")',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              transform: " scale(2) ",
+            }}
+          />
           <ElectricVideoCard
             youtubeId="W-epbrFWMbk"
             eyebrow="Obu demo"
@@ -96,31 +112,33 @@ export default function DemoVideoSection() {
         </div>
 
         <div className="mx-auto mt-10 grid max-w-5xl gap-4 md:grid-cols-3">
-          {["Draft replies", "Schedule meetings", "Remember follow-ups"].map((item, index) => (
-            <button
-              key={item}
-              ref={(node) => {
-                proofRefs.current[index] = node;
-              }}
-              type="button"
-              className="group relative mx-auto min-h-14 w-full max-w-[17rem] text-left"
-            >
-              <span
-                className="absolute inset-0 translate-x-1.5 translate-y-1.5 bg-[#fff1dc] opacity-95 blur-[0.2px] transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"
-                style={{ clipPath: stickerClip }}
-              />
-              <span
-                className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-[#ffd4b4]/70 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"
-                style={{ clipPath: stickerClip }}
-              />
-              <span
-                className="relative flex min-h-14 items-center justify-center bg-[#FF6045] px-7 py-4 font-sans text-sm font-semibold uppercase tracking-[0.12em] text-black shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_16px_42px_rgba(255,96,69,0.16)] transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
-                style={{ clipPath: stickerClip }}
+          {["Draft replies", "Schedule meetings", "Remember follow-ups"].map(
+            (item, index) => (
+              <button
+                key={item}
+                ref={(node) => {
+                  proofRefs.current[index] = node;
+                }}
+                type="button"
+                className="group relative mx-auto min-h-14 w-full max-w-[17rem] text-left"
               >
-                {item}
-              </span>
-            </button>
-          ))}
+                <span
+                  className="absolute inset-0 translate-x-1.5 translate-y-1.5 bg-[#fff1dc] opacity-95 blur-[0.2px] transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"
+                  style={{ clipPath: stickerClip }}
+                />
+                <span
+                  className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-[#ffd4b4]/70 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"
+                  style={{ clipPath: stickerClip }}
+                />
+                <span
+                  className="relative flex min-h-14 items-center justify-center bg-[#FF6045] px-7 py-4 font-sans text-sm font-semibold uppercase tracking-[0.12em] text-black shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_16px_42px_rgba(255,96,69,0.16)] transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
+                  style={{ clipPath: stickerClip }}
+                >
+                  {item}
+                </span>
+              </button>
+            ),
+          )}
         </div>
       </div>
     </section>
