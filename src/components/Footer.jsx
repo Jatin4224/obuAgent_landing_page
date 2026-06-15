@@ -107,13 +107,6 @@ export default function Footer() {
         {/* CTA banner */}
         <div className="flex flex-col items-start justify-between gap-10 pb-14 md:flex-row md:items-end">
           <div className="max-w-xl">
-            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 font-mono text-[0.62rem] font-black uppercase tracking-[0.18em] text-white/40">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#FF6045]/60" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#FF6045]" />
-              </span>
-              All systems calm
-            </span>
             <h2 className="text-3xl font-light leading-[1.1] tracking-tight text-white md:text-5xl">
               Let the busywork
               <br />
@@ -123,12 +116,15 @@ export default function Footer() {
 
           <a
             href="#login"
-            className="group relative inline-flex shrink-0 items-center gap-3 overflow-hidden rounded-full bg-gradient-to-b from-[#FF7A5C] to-[#FF4520] px-8 py-5 font-mono text-sm font-black uppercase tracking-[-0.02em] text-white shadow-[0_8px_30px_rgba(255,96,69,0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_44px_rgba(255,96,69,0.4)]"
+            className="group relative flex min-h-[4.5rem] min-w-[15rem] items-center justify-center px-8 py-5 text-center font-mono text-sm font-black uppercase tracking-[-0.04em] text-white transition-transform duration-300 hover:-translate-y-1"
           >
-            <span className="absolute inset-0 -translate-x-full bg-white/15 transition-transform duration-500 ease-out group-hover:translate-x-0" />
-            <span className="relative z-10">Get started</span>
-            <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
-              →
+            <span
+              className="absolute inset-[-0.75rem] bg-center bg-contain bg-no-repeat transition duration-300 group-hover:brightness-125 group-hover:saturate-150"
+              style={{ backgroundImage: 'url("/assets/orange-button.png")' }}
+            />
+            <span className="absolute -bottom-1 left-1/2 h-[3px] w-2/3 -translate-x-1/2 scale-x-0 bg-[#FF6045] shadow-[0_0_18px_rgba(255,96,69,0.9)] transition-transform duration-300 group-hover:scale-x-100" />
+            <span className="relative z-10 drop-shadow-[0_2px_0_rgba(0,0,0,0.55)] mb-2">
+              Get Started
             </span>
           </a>
         </div>
