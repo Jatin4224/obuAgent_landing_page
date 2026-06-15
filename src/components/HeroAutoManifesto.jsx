@@ -15,10 +15,10 @@ const textGroups = [
 ];
 
 const fadeInDuration = 0.65;
-const holdDuration = 4;
+const holdDuration = 2.1;
 const fadeOutDuration = 0.65;
 const lineDuration = fadeInDuration + holdDuration + fadeOutDuration;
-const manifestoScrollLength = 13.2;
+const manifestoScrollLength = 7.5;
 
 export default function HeroAutoManifesto({ rootRef, productIntroRef }) {
   const root = useRef(null);
@@ -121,12 +121,12 @@ export default function HeroAutoManifesto({ rootRef, productIntroRef }) {
           ref={(node) => {
             groupRefs.current[index] = node;
           }}
-          className="absolute mx-auto max-w-[920px] whitespace-pre-line opacity-0"
+          className="absolute mx-auto max-w-[760px] whitespace-pre-line opacity-0"
           style={{
             color: "rgba(255,255,255,0.52)",
             fontFamily:
               '"Gilroy Light", "Gilroy Regular", Gilroy, Inter, ui-sans-serif, system-ui, sans-serif',
-            fontSize: "clamp(2rem, 5vw, 5rem)",
+            fontSize: "clamp(1.8rem, 4.2vw, 4rem)",
             fontWeight: 300,
             lineHeight: 1.08,
             letterSpacing: "-0.025em",

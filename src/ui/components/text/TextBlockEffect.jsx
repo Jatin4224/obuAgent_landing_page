@@ -20,7 +20,7 @@ export function TextBlock({
   return (
     <div
       className={cn(
-        "relative z-[2] flex max-w-[900px] items-center justify-center text-center",
+        "relative z-[2] flex max-w-[760px] items-center justify-center text-center",
         className,
       )}
       data-text-block-wrapper
@@ -28,7 +28,7 @@ export function TextBlock({
       <p
         data-text-block
         data-block-color={blockColor}
-        className="text-[clamp(2.3rem,6vw,6.8rem)] font-normal leading-[1.08] opacity-0"
+        className="text-[clamp(2rem,4.8vw,5.25rem)] font-normal leading-[1.08] opacity-0"
         style={{ color: textColor, fontFamily, ...style }}
       >
         {children}

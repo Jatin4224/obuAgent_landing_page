@@ -1,9 +1,9 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef } from "react";
-import BodyRunParticles from "./BodyRunParticles.jsx";
 import EyeParticles from "./EyeParticles.jsx";
 import FoxParticles from "./FoxParticles.jsx";
 import HeroAutoManifesto from "./HeroAutoManifesto.jsx";
+import HeroMusicPlayer from "./HeroMusicPlayer.jsx";
 import HeroObuVideoFlyIn from "./HeroObuVideoFlyIn.jsx";
 import HeroParticleHandoff from "./HeroParticleHandoff.jsx";
 import WorkspacePowerOverlay from "./WorkspacePowerOverlay.jsx";
@@ -31,7 +31,7 @@ export default function Hero({ nextSectionRef }) {
   const videoPlayerRef = useRef(null);
 
   return (
-    <section ref={sectionRef} className="relative isolate z-0 h-[1850vh] bg-black">
+    <section ref={sectionRef} className="relative isolate z-0 h-[1250vh] bg-black">
       <div className="sticky top-0 h-screen w-screen overflow-hidden bg-black">
         {/* 2. PLACED BEHIND: Rendered the text streams first with a lower z-index */}
         <div className="absolute inset-0 z-10 pointer-events-none">
@@ -56,11 +56,6 @@ export default function Hero({ nextSectionRef }) {
         >
           {/* Note: Removed the solid black curtain color attachment so layers underneath peek through */}
           <CinematicCamera />
-          <BodyRunParticles
-            bodyRevealRef={bodyRevealRef}
-            productIntroRef={productIntroRef}
-            handoffRef={handoffRef}
-          />
           <FoxParticles
             wakeProgressRef={wakeProgressRef}
             dissolveRef={pullBackRef}
@@ -74,6 +69,7 @@ export default function Hero({ nextSectionRef }) {
         <div className="pointer-events-none absolute inset-0 z-[25] bg-[radial-gradient(circle_at_50%_48%,transparent_0%,rgba(0,0,0,0.1)_45%,rgba(0,0,0,0.82)_92%)]" />
         <HeroObuVideoFlyIn ref={videoPlayerRef} rootRef={sectionRef} />
         <HeroAutoManifesto rootRef={sectionRef} productIntroRef={productIntroRef} />
+        <HeroMusicPlayer rootRef={sectionRef} />
         <HeroParticleHandoff
           rootRef={sectionRef}
           handoffRef={handoffRef}

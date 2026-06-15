@@ -1,10 +1,6 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import TextBlockEffect, {
-  TextBlock,
-} from "../ui/components/text/TextBlockEffect";
-
 gsap.registerPlugin(ScrollTrigger);
 
 const letters = [
@@ -54,7 +50,7 @@ function RansomHeading() {
       {letters.map((letter, index) => (
         <span
           key={`${letter.char}-${index}`}
-          className="inline-flex h-[clamp(3.5rem,7vw,6rem)] min-w-[clamp(2.7rem,5.6vw,4.8rem)] items-center justify-center border border-black/25 px-3 font-serif text-[clamp(2.6rem,6.3vw,5.4rem)] font-black leading-none shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
+          className="inline-flex h-[clamp(3rem,5.8vw,5rem)] min-w-[clamp(2.35rem,4.8vw,4rem)] items-center justify-center border border-black/25 px-3 font-serif text-[clamp(2.2rem,5.2vw,4.45rem)] font-black leading-none shadow-[0_10px_30px_rgba(0,0,0,0.45)]"
           style={{
             background: letter.bg,
             color: letter.color,
@@ -77,7 +73,6 @@ export default function TrustControlCollage() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Heading Intro Animation
       gsap.fromTo(
         headingRef.current.children,
         { y: 80, opacity: 0, rotate: 0, filter: "blur(10px)" },
@@ -96,10 +91,9 @@ export default function TrustControlCollage() {
         },
       );
 
-      // 2. Cards Intro Animation
       gsap.fromTo(
         cardRefs.current,
-        { y: 90, opacity: 0, scale: 0.9, filter: "blur(14px)" },
+        { y: 72, opacity: 0, scale: 0.94, filter: "blur(12px)" },
         {
           y: 0,
           opacity: 1,
@@ -115,11 +109,10 @@ export default function TrustControlCollage() {
         },
       );
 
-      // 3. Infinite Idle Floating Animation
       gsap.to(cardRefs.current, {
-        y: "+=12",
-        rotation: "+=1",
-        duration: 3.5,
+        y: "+=7",
+        rotation: "+=0.45",
+        duration: 4.8,
         ease: "sine.inOut",
         yoyo: true,
         repeat: -1,
@@ -140,7 +133,7 @@ export default function TrustControlCollage() {
       ref={(node) => {
         cardRefs.current[index] = node;
       }}
-      className="group relative aspect-[3/2] w-full max-w-[22rem] overflow-visible p-0 shadow-[0_28px_70px_rgba(0,0,0,0.72)] transition-[translate,scale,box-shadow] duration-500 hover:-translate-y-3 hover:scale-[1.05] hover:shadow-[0_42px_100px_rgba(0,0,0,0.82),0_0_42px_rgba(255,255,255,0.06)]"
+      className="group relative aspect-[3/2] w-full max-w-[18.5rem] overflow-visible p-0 shadow-[0_28px_70px_rgba(0,0,0,0.68)] transition-[translate,scale,box-shadow] duration-500 hover:-translate-y-2 hover:scale-[1.035] hover:shadow-[0_40px_90px_rgba(0,0,0,0.8),0_0_36px_rgba(255,255,255,0.05)] md:max-w-[19.5rem]"
       style={{ rotate: card.rotate }}
       onMouseEnter={(event) => {
         event.currentTarget.style.rotate = card.hoverRotate;
@@ -162,67 +155,41 @@ export default function TrustControlCollage() {
 
   return (
     <section
+      id="control"
       ref={sectionRef}
-      className="relative min-h-screen overflow-hidden bg-[#000000] px-5 py-24 text-white md:px-10 lg:px-16 "
+      className="relative min-h-[92vh] overflow-hidden bg-black px-5 py-20 text-white md:px-10 lg:px-14"
     >
       <div
-        className="pointer-events-none absolute inset-0 z-0 mt-40 opacity-40 "
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.24]"
         style={{
-          backgroundImage: 'url("/assets/image.png")',
-          backgroundSize: "cover",
+          backgroundImage: 'url("/assets/command-texture.png")',
+          backgroundSize: "min(92rem, 120vw) auto",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          transform: "rotate(45deg) scale(1) ",
+          transform: "rotate(28deg) scale(1.08)",
         }}
       />
-      {/* Increased max-w from 85rem to 96rem to push everything further out horizontally */}
       <div className="relative z-10 mx-auto max-w-[96rem]">
-        {/* 1. FIRST DIV: Top Two Cards */}
-        {/* Added extra horizontal padding (lg:px-8 xl:px-12) to control exactly how close to the screen edges they go */}
-        <div className="relative z-10 flex w-full flex-col items-center justify-between gap-12 md:flex-row md:items-start lg:px-8 xl:px-12">
+        <div className="relative z-10 flex w-full flex-col items-center justify-between gap-10 md:flex-row md:items-start lg:px-10 xl:px-16">
           {services.slice(0, 2).map((card, index) => renderCard(card, index))}
         </div>
 
-        {/* 2. SECOND DIV: Center Heading */}
-        <div className="relative z-20 mt-12 flex flex-col items-center justify-center md:-mt-[10rem] lg:-mt-[12rem]">
+        <div className="relative z-20 mt-10 flex flex-col items-center justify-center md:-mt-[9rem] lg:-mt-[11rem]">
           <p className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.48em] text-[#B07B5F]">
             Trust and control
           </p>
 
-          <TextBlockEffect
-            compact
-            className="bg-transparent"
-            triggerStart="top 68%"
-          >
-            <section className="flex justify-center">
-              <TextBlock
-                blockColor="#71A624"
-                textColor="#ffffff"
-                fontFamily='"Outfit", Inter, ui-sans-serif, system-ui, sans-serif'
-                className="max-w-none"
-                style={{
-                  fontSize: "clamp(2.35rem,5.4vw,5.8rem)",
-                  fontWeight: 300,
-                  lineHeight: 0.95,
-                  letterSpacing: "-0.045em",
-                }}
-              >
-                <div ref={headingRef} className="mt-6">
-                  <RansomHeading />
-                </div>
-              </TextBlock>
-            </section>
-          </TextBlockEffect>
+          <div ref={headingRef} className="mt-6">
+            <RansomHeading />
+          </div>
 
-          <p className="mx-auto mt-8 max-w-lg text-center font-mono text-sm font-bold uppercase leading-relaxed tracking-[-0.04em] text-white/70 md:text-base">
+          <p className="mx-auto mt-7 max-w-xl text-center font-mono text-xs font-bold uppercase leading-6 tracking-[-0.035em] text-white/58 md:text-sm">
             Obu can move quickly through your inbox and calendar, but every
             important action stays visible, reversible, and approved by you.
           </p>
         </div>
 
-        {/* 3. THIRD DIV: Bottom Three Cards */}
-        {/* Increased gap from lg:gap-14 to lg:gap-20 xl:gap-24 to create a much wider spread */}
-        <div className="relative z-10 mt-12 flex w-full flex-col items-center justify-center gap-10 md:-mt-8 md:flex-row md:flex-wrap lg:-mt-12 lg:flex-nowrap lg:gap-20 xl:gap-24">
+        <div className="relative z-10 mt-12 flex w-full flex-col items-center justify-center gap-9 md:-mt-6 md:flex-row md:flex-wrap lg:mt-12 lg:flex-nowrap lg:gap-16 xl:gap-24">
           {services
             .slice(2, 5)
             .map((card, index) => renderCard(card, index + 2))}

@@ -60,12 +60,13 @@ export default function DemoVideoSection() {
 
   return (
     <section
+      id="demo"
       ref={sectionRef}
-      className="relative overflow-hidden bg-black px-6 py-28 text-white md:px-12 lg:px-20"
+      className="relative overflow-hidden bg-black px-5 py-20 text-white md:px-10 lg:px-16"
     >
-      <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-10 md:gap-12">
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-9 md:gap-11">
         <div className="mx-auto max-w-5xl text-center">
-          <p className="mb-5 text-xs font-medium uppercase tracking-[0.44em] text-[#ffb28a]/70">
+          <p className="mb-5 text-xs font-medium uppercase tracking-[0.44em] text-[#FF6045]/72">
             Watch the workflow
           </p>
           <TextBlockEffect
@@ -80,7 +81,7 @@ export default function DemoVideoSection() {
                 fontFamily='"Outfit", Inter, ui-sans-serif, system-ui, sans-serif'
                 className="max-w-none"
                 style={{
-                  fontSize: "clamp(2.35rem,5.4vw,5.8rem)",
+                  fontSize: "clamp(2rem,4.4vw,4.7rem)",
                   fontWeight: 300,
                   lineHeight: 0.95,
                   letterSpacing: "-0.045em",
@@ -92,26 +93,27 @@ export default function DemoVideoSection() {
           </TextBlockEffect>
         </div>
 
-        <div ref={cardRef} className="mx-auto w-full max-w-[88rem]">
+        <div ref={cardRef} className="relative mx-auto w-full max-w-[72rem]">
           <div
-            className="pointer-events-none absolute inset-0 z-0 mt-40 opacity-40 "
+            className="pointer-events-none absolute inset-x-[-8%] top-1/2 z-0 h-[72%] -translate-y-1/2 opacity-28"
             style={{
               backgroundImage: 'url("/assets/breaking-texture.png")',
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
-              transform: " scale(2) ",
             }}
           />
-          <ElectricVideoCard
-            youtubeId="W-epbrFWMbk"
-            eyebrow="Obu demo"
-            title="One prompt becomes the workflow."
-            description="Watch the full Obu demo inside the electric glass frame."
-          />
+          <div className="relative z-10">
+            <ElectricVideoCard
+              youtubeId="W-epbrFWMbk"
+              eyebrow="Obu demo"
+              title="One prompt becomes the workflow."
+              description="Watch the full Obu demo inside the electric glass frame."
+            />
+          </div>
         </div>
 
-        <div className="mx-auto mt-10 grid max-w-5xl gap-4 md:grid-cols-3">
+        <div className="mx-auto mt-8 grid max-w-5xl gap-4 md:grid-cols-3">
           {["Draft replies", "Schedule meetings", "Remember follow-ups"].map(
             (item, index) => (
               <button
@@ -120,7 +122,7 @@ export default function DemoVideoSection() {
                   proofRefs.current[index] = node;
                 }}
                 type="button"
-                className="group relative mx-auto min-h-14 w-full max-w-[17rem] text-left"
+                className="group relative mx-auto min-h-14 w-full max-w-[16.5rem] text-left"
               >
                 <span
                   className="absolute inset-0 translate-x-1.5 translate-y-1.5 bg-[#fff1dc] opacity-95 blur-[0.2px] transition-transform duration-300 group-hover:translate-x-2 group-hover:translate-y-2"
@@ -131,7 +133,7 @@ export default function DemoVideoSection() {
                   style={{ clipPath: stickerClip }}
                 />
                 <span
-                  className="relative flex min-h-14 items-center justify-center bg-[#FF6045] px-7 py-4 font-sans text-sm font-semibold uppercase tracking-[0.12em] text-black shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_16px_42px_rgba(255,96,69,0.16)] transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="relative flex min-h-14 items-center justify-center bg-[#FF6045] px-7 py-4 font-sans text-xs font-semibold uppercase tracking-[0.14em] text-black shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_16px_42px_rgba(255,96,69,0.16)] transition-transform duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 md:text-sm"
                   style={{ clipPath: stickerClip }}
                 >
                   {item}

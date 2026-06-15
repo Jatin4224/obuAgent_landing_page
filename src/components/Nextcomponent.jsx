@@ -2,10 +2,9 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Make sure your paths match your project structure!
-import obuVideo from "../../src/assets/step1.mp4";
-import obuVideo2 from "../../src/assets/step2.mp4";
-import obuVideo3 from "../../src/assets/step3.mp4";
+import obuVideo from "../assets/step1.mp4";
+import obuVideo2 from "../assets/step2.mp4";
+import obuVideo3 from "../assets/step3.mp4";
 import TextBlockEffect, {
   TextBlock,
 } from "../ui/components/text/TextBlockEffect.jsx";
@@ -56,10 +55,10 @@ function StepCard({
   return (
     <section
       ref={(node) => setRowRef(node, index)}
-      className="relative flex min-h-screen items-center justify-center overflow-hidden border-b border-white/8 px-8 py-16 md:px-16 lg:px-24 xl:px-32"
+      className="relative flex min-h-[86vh] items-center justify-center overflow-hidden border-b border-white/[0.06] px-5 py-16 md:px-10 lg:px-16 xl:px-20"
     >
       <div
-        className={`grid w-full grid-cols-1 items-center gap-12 md:gap-10 ${
+        className={`grid w-full max-w-[78rem] grid-cols-1 items-center gap-12 md:gap-10 ${
           videoLeft ? "md:grid-cols-[66%_34%]" : "md:grid-cols-[34%_66%]"
         }`}
       >
@@ -73,7 +72,7 @@ function StepCard({
             className="max-w-[31rem] text-white"
             style={{
               fontFamily: '"Outfit", sans-serif',
-              fontSize: "clamp(3rem, 5vw, 5.8rem)",
+              fontSize: "clamp(2.35rem, 4.1vw, 4.75rem)",
               fontWeight: 300,
               lineHeight: 0.92,
               letterSpacing: "-0.02em",
@@ -81,19 +80,18 @@ function StepCard({
           >
             {step.title}
           </h2>
-          <p className="mt-10 max-w-[25rem] text-lg leading-7 text-white/58 md:text-xl md:leading-8">
+          <p className="mt-6 max-w-[24rem] text-base font-light leading-7 text-white/58 md:text-[1.05rem] md:leading-8">
             {step.body}
           </p>
         </div>
-
         <div
-          className={`relative flex min-h-[58vh] items-center justify-center md:min-h-[78vh] ${
+          className={`relative flex min-h-[50vh] items-center justify-center md:min-h-[66vh] ${
             videoLeft ? "md:order-1" : ""
           }`}
         >
           <div
             ref={(node) => setVisualRef(node, index)}
-            className={`relative aspect-video w-full max-w-[56rem] will-change-[transform,opacity,filter]`}
+            className="relative aspect-video w-full max-w-[46rem] will-change-[transform,opacity,filter]"
           >
             <video
               src={step.video}
@@ -104,15 +102,15 @@ function StepCard({
               preload="auto"
               className="h-full w-full object-cover mix-blend-screen"
             />
-            <div className="pointer-events-none absolute bottom-13 right-15 flex h-14 w-14 items-center justify-center rounded-full bg-grey-800 text-2xl text-white backdrop-blur-md">
-              ||
+            <div className="pointer-events-none absolute bottom-5 right-5 flex h-11 w-11 items-center justify-center rounded-full bg-black/45 text-sm font-semibold text-white/80 backdrop-blur-md md:bottom-8 md:right-8 md:h-[3.25rem] md:w-[3.25rem]">
+              II
             </div>
           </div>
 
-          <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 aspect-video w-full max-w-[56rem] -translate-x-1/2 -translate-y-1/2">
+          <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 aspect-video w-full max-w-[46rem] -translate-x-1/2 -translate-y-1/2">
             <div
               ref={(node) => setBadgeRef(node, index)}
-              className={`absolute top-1/2 flex h-16 w-28 items-center justify-center rounded-full bg-[#ff6045] text-3xl font-light text-white md:h-20 md:w-36 md:text-4xl ${
+              className={`absolute top-1/2 flex h-12 w-20 items-center justify-center rounded-full bg-[#FF6045] text-xl font-light text-white shadow-[0_18px_50px_rgba(255,96,69,0.18)] md:h-14 md:w-24 md:text-2xl ${
                 videoLeft ? "right-0" : "left-0"
               }`}
             >
@@ -121,12 +119,12 @@ function StepCard({
 
             <div
               ref={(node) => setPromptRef(node, index)}
-              className="absolute left-1/2 top-1/2 flex h-12 w-[70%] max-w-[34rem] items-center rounded-full bg-white px-7 text-black backdrop-blur-md"
+              className="absolute left-1/2 top-1/2 flex h-12 w-[72%] max-w-[34rem] items-center rounded-full bg-white px-5 text-black shadow-[0_18px_55px_rgba(0,0,0,0.22)] backdrop-blur-md md:px-7"
             >
               <span className="truncate text-sm text-black/60 md:text-base">
                 {step.prompt}
               </span>
-              <span className="ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#ff6045] text-white">
+              <span className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FF6045] text-white md:h-9 md:w-9">
                 ?
               </span>
             </div>
@@ -141,7 +139,6 @@ const Nextcomponent = forwardRef(function Nextcomponent(_, ref) {
   const sectionRef = useRef(null);
   const introCardRef = useRef(null);
 
-  // Notice we removed introRef because the TextBlock component handles its own animations
   const rowRefs = useRef([]);
   const textRefs = useRef([]);
   const visualRefs = useRef([]);
@@ -162,9 +159,9 @@ const Nextcomponent = forwardRef(function Nextcomponent(_, ref) {
           introCardRef.current,
           {
             opacity: 0,
-            yPercent: 18,
-            z: -430,
-            rotationX: 42,
+            yPercent: 14,
+            z: -320,
+            rotationX: 32,
             scale: 0.955,
             filter: "blur(12px)",
             transformOrigin: "center center",
@@ -194,7 +191,7 @@ const Nextcomponent = forwardRef(function Nextcomponent(_, ref) {
         const textDirection = videoLeft ? 1 : -1;
         const visualDirection = videoLeft ? -1 : 1;
 
-        const badgeXPercent = videoLeft ? 50 : -50;
+        const badgeXPercent = videoLeft ? 44 : -44;
 
         const text = textRefs.current[index];
         const visual = visualRefs.current[index];
@@ -204,9 +201,9 @@ const Nextcomponent = forwardRef(function Nextcomponent(_, ref) {
         gsap.fromTo(
           text,
           {
-            x: textDirection * 160,
-            y: 96,
-            rotate: textDirection * -9,
+            x: textDirection * 110,
+            y: 72,
+            rotate: textDirection * -5,
             opacity: 0,
             filter: "blur(12px)",
           },
@@ -230,11 +227,11 @@ const Nextcomponent = forwardRef(function Nextcomponent(_, ref) {
         gsap.fromTo(
           visual,
           {
-            x: visualDirection * 190,
-            y: -112,
-            scale: 0.92,
-            opacity: 0.72,
-            rotate: visualDirection * -8,
+            x: visualDirection * 130,
+            y: -76,
+            scale: 0.95,
+            opacity: 0.82,
+            rotate: visualDirection * -4,
           },
           {
             x: 0,
@@ -256,8 +253,8 @@ const Nextcomponent = forwardRef(function Nextcomponent(_, ref) {
         gsap.fromTo(
           badge,
           {
-            x: visualDirection * 90,
-            y: -46,
+            x: visualDirection * 60,
+            y: -34,
             xPercent: badgeXPercent,
             yPercent: -50,
             rotate: visualDirection * -4,
@@ -286,8 +283,8 @@ const Nextcomponent = forwardRef(function Nextcomponent(_, ref) {
         gsap.fromTo(
           prompt,
           {
-            x: visualDirection * 90,
-            y: -46,
+            x: visualDirection * 60,
+            y: -34,
             xPercent: -50,
             yPercent: -50,
             rotate: visualDirection * -4,
@@ -332,16 +329,16 @@ const Nextcomponent = forwardRef(function Nextcomponent(_, ref) {
 
   return (
     <section
+      id="workflow"
       ref={sectionRef}
       className="relative min-h-screen bg-black text-white"
     >
       <div className="relative z-10">
-        {/* NEW INTRO: Centered, Short, with TextBlock Effect */}
         <TextBlockEffect>
-          <section className="relative flex min-h-screen w-full items-center justify-center overflow-hidden px-8">
+          <section className="relative flex min-h-[82vh] w-full items-center justify-center overflow-hidden px-6 py-20 md:px-8">
             <div
               ref={introCardRef}
-              className="max-w-4xl text-center text-4xl md:text-6xl lg:text-7xl"
+              className="max-w-3xl text-center text-4xl md:text-5xl lg:text-6xl"
             >
               <TextBlock
                 blockColor="#ff6045"
@@ -354,7 +351,6 @@ const Nextcomponent = forwardRef(function Nextcomponent(_, ref) {
           </section>
         </TextBlockEffect>
 
-        {/* STEP CARDS */}
         {steps.map((step, index) => (
           <StepCard
             key={step.number}
