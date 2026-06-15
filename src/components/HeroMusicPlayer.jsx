@@ -153,7 +153,7 @@ export default function HeroMusicPlayer({ rootRef }) {
           </span>
           <span className="mt-0.5 block max-w-[11rem] truncate text-sm font-light text-white/82">
             {needsTap
-              ? "Tap to enable"
+              ? "play music"
               : isPlaying
                 ? "Heaven is playing"
                 : "listen good music"}
