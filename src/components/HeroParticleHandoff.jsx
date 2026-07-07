@@ -4,8 +4,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Keep in sync with HeroAutoManifesto / HeroObuVideoFlyIn. The handoff must
+// finish before the sticky hero releases (section height − one viewport),
+// otherwise the fade-out never plays and the hero cuts off abruptly.
 const manifestoStartOffset = 2.95;
-const manifestoScrollLength = 13.2;
+const manifestoScrollLength = 7.5;
 
 export default function HeroParticleHandoff({
   rootRef,
@@ -37,7 +40,7 @@ export default function HeroParticleHandoff({
         scrollTrigger: {
           trigger: rootRef.current,
           start: () => `top+=${window.innerHeight * (manifestoStartOffset + manifestoScrollLength + 0.45)} top`,
-          end: () => `+=${window.innerHeight * 1.25}`,
+          end: () => `+=${window.innerHeight * 1.0}`,
           scrub: 1,
           invalidateOnRefresh: true,
         },

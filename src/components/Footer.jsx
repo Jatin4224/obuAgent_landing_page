@@ -8,7 +8,7 @@ const productLinks = [
   { label: "Workflow", href: "#workflow" },
   { label: "Demo", href: "#demo" },
   { label: "Control", href: "#control" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "Start", href: "#start" },
 ];
 
 const companyLinks = [

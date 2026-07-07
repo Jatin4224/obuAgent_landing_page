@@ -133,7 +133,7 @@ export default function TrustControlCollage() {
       ref={(node) => {
         cardRefs.current[index] = node;
       }}
-      className="group relative aspect-[3/2] w-full max-w-[18.5rem] overflow-visible p-0 shadow-[0_28px_70px_rgba(0,0,0,0.68)] transition-[translate,scale,box-shadow] duration-500 hover:-translate-y-2 hover:scale-[1.035] hover:shadow-[0_40px_90px_rgba(0,0,0,0.8),0_0_36px_rgba(255,255,255,0.05)] md:max-w-[19.5rem]"
+      className="group relative aspect-[3/2] w-full max-w-[18.5rem] overflow-visible p-0 shadow-[0_28px_70px_rgba(0,0,0,0.68)] transition-[translate,scale,box-shadow,rotate] duration-500 ease-out hover:-translate-y-2 hover:scale-[1.035] hover:shadow-[0_40px_90px_rgba(0,0,0,0.8),0_0_36px_rgba(255,255,255,0.05)] md:max-w-[19.5rem]"
       style={{ rotate: card.rotate }}
       onMouseEnter={(event) => {
         event.currentTarget.style.rotate = card.hoverRotate;

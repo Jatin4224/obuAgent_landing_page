@@ -42,8 +42,18 @@ export default function FoxParticles({ wakeProgressRef, dissolveRef }) {
   const projectionVector = useRef(new THREE.Vector3());
   const mouse = useRef(new THREE.Vector2(9, 9));
   const mouseTarget = useRef(new THREE.Vector2(9, 9));
+  const headLook = useRef(new THREE.Vector2(0, 0));
+  const boopTime = useRef(999); // seconds since last nose boop; 999 = idle
   const { gl, viewport, camera } = useThree();
   const [particleData, setParticleData] = useState(null);
+
+  useEffect(() => {
+    const handleBoop = () => {
+      boopTime.current = 0;
+    };
+    window.addEventListener("obu-fox-boop", handleBoop);
+    return () => window.removeEventListener("obu-fox-boop", handleBoop);
+  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -129,6 +139,23 @@ export default function FoxParticles({ wakeProgressRef, dissolveRef }) {
     const dissolve = dissolveRef?.current ?? 0;
     mouse.current.lerp(mouseTarget.current, 0.14);
 
+    // Head subtly turns toward the pointer — the fox is "aware" of you even
+    // while asleep. mouseTarget parks at (9,9) off-canvas, so gate on range.
+    const onCanvas =
+      Math.abs(mouseTarget.current.x) <= 1.2 && Math.abs(mouseTarget.current.y) <= 1.2;
+    headLook.current.x += ((onCanvas ? mouseTarget.current.x : 0) - headLook.current.x) * 0.045;
+    headLook.current.y += ((onCanvas ? mouseTarget.current.y : 0) - headLook.current.y) * 0.045;
+
+    // Nose-boop ripple: an expanding ring impulse from the nose.
+    let boopWave = 0;
+    let boopRadius = 0;
+    const bt = boopTime.current;
+    if (bt < 1.2) {
+      boopTime.current += dt;
+      boopWave = Math.sin(Math.min(bt / 1.2, 1) * Math.PI);
+      boopRadius = 0.3 + bt * 3.4;
+    }
+
     for (let i = 0; i < count; i += 1) {
       const i3 = i * 3;
       const ox = original[i3];
@@ -157,6 +184,20 @@ export default function FoxParticles({ wakeProgressRef, dissolveRef }) {
         tx += (dx / dist) * push * 0.68;
         ty += (dy / dist) * push * 0.52;
         tz += push * 0.34;
+      }
+
+      if (boopWave > 0) {
+        // Distance from the nose (≈ 0, -1.05 in fox space) vs the ring front
+        const noseDx = ox;
+        const noseDy = oy + 1.05;
+        const noseDist = Math.sqrt(noseDx * noseDx + noseDy * noseDy) + 0.0001;
+        const ringInfluence = Math.max(0, 1 - Math.abs(noseDist - boopRadius) / 0.55);
+        if (ringInfluence > 0) {
+          const kick = ringInfluence * ringInfluence * boopWave;
+          tx += (noseDx / noseDist) * kick * 0.42;
+          ty += (noseDy / noseDist) * kick * 0.34;
+          tz += kick * 0.3;
+        }
       }
 
       if (localDissolve > 0) {
@@ -190,8 +231,10 @@ export default function FoxParticles({ wakeProgressRef, dissolveRef }) {
       pointsRef.current.scale.setScalar(fitScale);
       pointsRef.current.position.y = 0;
       pointsRef.current.position.z = 0.42;
-      pointsRef.current.rotation.y = Math.sin(elapsed * 0.18) * 0.055;
-      pointsRef.current.rotation.x = Math.sin(elapsed * 0.13) * 0.018;
+      pointsRef.current.rotation.y =
+        Math.sin(elapsed * 0.18) * 0.055 + headLook.current.x * 0.085;
+      pointsRef.current.rotation.x =
+        Math.sin(elapsed * 0.13) * 0.018 - headLook.current.y * 0.05;
     }
     if (materialRef.current) {
       materialRef.current.uniforms.uOpacity.value = 1 - dissolve * 0.78;

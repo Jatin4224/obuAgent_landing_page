@@ -64,7 +64,10 @@ export default function FinalCtaSection() {
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.48em] text-[#FF6045]/78">
             Ready when you are
           </p>
-          <h2 className="text-[clamp(2.7rem,6vw,6.25rem)] font-light leading-[0.9] tracking-[-0.075em]">
+          <h2
+            className="text-[clamp(2.7rem,6vw,6.25rem)] font-light leading-[0.92] tracking-[-0.04em]"
+            style={{ fontFamily: '"Outfit", sans-serif' }}
+          >
             Enter your command center.
           </h2>
           <p className="mx-auto mt-7 max-w-2xl text-base font-light leading-7 text-white/56 md:text-lg">

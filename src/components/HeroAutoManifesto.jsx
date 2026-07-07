@@ -125,7 +125,7 @@ export default function HeroAutoManifesto({ rootRef, productIntroRef }) {
           style={{
             color: "rgba(255,255,255,0.52)",
             fontFamily:
-              '"Gilroy Light", "Gilroy Regular", Gilroy, Inter, ui-sans-serif, system-ui, sans-serif',
+              '"Outfit", Inter, ui-sans-serif, system-ui, sans-serif',
             fontSize: "clamp(1.8rem, 4.2vw, 4rem)",
             fontWeight: 300,
             lineHeight: 1.08,

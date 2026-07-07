@@ -1,6 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowUp, Pause } from "lucide-react";
 
 import obuVideo from "../assets/step1.mp4";
 import obuVideo2 from "../assets/step2.mp4";
@@ -91,6 +92,7 @@ function StepCard({
         >
           <div
             ref={(node) => setVisualRef(node, index)}
+            data-cursor-label="WATCH"
             className="relative aspect-video w-full max-w-[46rem] will-change-[transform,opacity,filter]"
           >
             <video
@@ -102,8 +104,8 @@ function StepCard({
               preload="auto"
               className="h-full w-full object-cover mix-blend-screen"
             />
-            <div className="pointer-events-none absolute bottom-5 right-5 flex h-11 w-11 items-center justify-center rounded-full bg-black/45 text-sm font-semibold text-white/80 backdrop-blur-md md:bottom-8 md:right-8 md:h-[3.25rem] md:w-[3.25rem]">
-              II
+            <div className="pointer-events-none absolute bottom-5 right-5 flex h-11 w-11 items-center justify-center rounded-full bg-black/45 text-white/80 backdrop-blur-md md:bottom-8 md:right-8 md:h-[3.25rem] md:w-[3.25rem]">
+              <Pause className="h-4 w-4 fill-current md:h-5 md:w-5" strokeWidth={0} />
             </div>
           </div>
 
@@ -125,7 +127,7 @@ function StepCard({
                 {step.prompt}
               </span>
               <span className="ml-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FF6045] text-white md:h-9 md:w-9">
-                ?
+                <ArrowUp className="h-4 w-4 md:h-[1.15rem] md:w-[1.15rem]" strokeWidth={2.5} />
               </span>
             </div>
           </div>

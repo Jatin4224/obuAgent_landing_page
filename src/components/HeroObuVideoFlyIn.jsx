@@ -9,7 +9,9 @@ const fadeInDuration = 0.65;
 const holdDuration = 4;
 const fadeOutDuration = 0.65;
 const lineDuration = fadeInDuration + holdDuration + fadeOutDuration;
-const manifestoScrollLength = 13.2;
+// Must match HeroAutoManifesto so the video lands as the last line settles —
+// the handoff fade in HeroParticleHandoff picks up right after this range.
+const manifestoScrollLength = 7.5;
 const finalLineStart = lineDuration * 5;
 
 const HeroObuVideoFlyIn = forwardRef(function HeroObuVideoFlyIn({ rootRef }, ref) {

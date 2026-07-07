@@ -13,7 +13,7 @@ const icons = [
     top: "20%",
     src: "/assets/linkdin.png",
     fallback: "in",
-    text: "obu post on linkedin",
+    text: "obu, post on linkedin",
   },
   {
     id: "gmail",
@@ -23,7 +23,7 @@ const icons = [
     top: "46%",
     src: "/assets/gmail.png",
     fallback: "M",
-    text: "obu bhai send mail",
+    text: "obu, send the mail",
   },
   {
     id: "slack",
@@ -33,7 +33,7 @@ const icons = [
     top: "75%",
     src: "/assets/slack.png",
     fallback: "#",
-    text: "obu bhai ping slack",
+    text: "obu, ping the team",
   },
   {
     id: "calendar",
@@ -43,7 +43,7 @@ const icons = [
     top: "18%",
     src: "/assets/calendar.png",
     fallback: "31",
-    text: "obu bhai schedule meet",
+    text: "obu, schedule the meet",
   },
   {
     id: "drive",
@@ -53,7 +53,7 @@ const icons = [
     top: "47%",
     src: "/assets/drive.png",
     fallback: "D",
-    text: "obu bhai read drive",
+    text: "obu, pull the doc",
   },
   {
     id: "notion",
@@ -63,7 +63,7 @@ const icons = [
     top: "76%",
     src: "/assets/notion.png",
     fallback: "N",
-    text: "obu bhai log notion",
+    text: "obu, log the notes",
   },
 ];
 

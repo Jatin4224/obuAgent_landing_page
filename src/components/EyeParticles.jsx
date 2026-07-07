@@ -62,8 +62,8 @@ export default function EyeParticles({ wakeProgressRef, dissolveRef }) {
     const p = smoothstep(progress);
     const dissolve = dissolveRef?.current ?? 0;
 
-    const targetLookX = THREE.MathUtils.clamp(pointer.x * 0.055, -0.055, 0.055);
-    const targetLookY = THREE.MathUtils.clamp(pointer.y * 0.045, -0.045, 0.045);
+    const targetLookX = THREE.MathUtils.clamp(pointer.x * 0.085, -0.085, 0.085);
+    const targetLookY = THREE.MathUtils.clamp(pointer.y * 0.06, -0.06, 0.06);
 
     /* FIX: Increased tracking interpolation weights from 0.08 to 0.22 
        to make the look-at animation significantly faster and snappier.

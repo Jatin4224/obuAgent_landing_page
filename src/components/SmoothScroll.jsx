@@ -25,6 +25,25 @@ export default function SmoothScroll({ children }) {
 
     lenis.on("scroll", handleScroll);
 
+    // Glide to in-page sections through Lenis instead of hard-jumping.
+    // pushState (not location.hash) avoids the app's hashchange handler.
+    const handleAnchorClick = (event) => {
+      const link = event.target.closest('a[href^="#"]');
+      if (!link) return;
+
+      const href = link.getAttribute("href");
+      if (!href || href === "#" || href === "#login") return;
+
+      const target = document.querySelector(href);
+      if (!target) return;
+
+      event.preventDefault();
+      window.history.pushState(null, "", href);
+      lenis.scrollTo(target, { duration: 1.6, easing: (t) => 1 - (1 - t) ** 4 });
+    };
+
+    document.addEventListener("click", handleAnchorClick);
+
     let frameId = 0;
     const raf = (time) => {
       lenis.raf(time);
@@ -36,6 +55,7 @@ export default function SmoothScroll({ children }) {
 
     return () => {
       cancelAnimationFrame(frameId);
+      document.removeEventListener("click", handleAnchorClick);
       lenis.off("scroll", handleScroll);
       lenis.destroy();
     };

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import heavenAudio from "../assets/Heaven.mp3";
+import { setSoundEnabled } from "../lib/sound.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,6 +26,7 @@ export default function HeroMusicPlayer({ rootRef }) {
       userPausedRef.current = false;
       setIsPlaying(true);
       setNeedsTap(false);
+      setSoundEnabled(true);
     } catch {
       setIsPlaying(false);
       setNeedsTap(true);
@@ -38,6 +40,7 @@ export default function HeroMusicPlayer({ rootRef }) {
     audio.pause();
     userPausedRef.current = true;
     setIsPlaying(false);
+    setSoundEnabled(false);
   };
 
   useEffect(() => {
@@ -153,10 +156,10 @@ export default function HeroMusicPlayer({ rootRef }) {
           </span>
           <span className="mt-0.5 block max-w-[11rem] truncate text-sm font-light text-white/82">
             {needsTap
-              ? "play music"
+              ? "Tap to play"
               : isPlaying
-                ? "Heaven is playing"
-                : "listen good music"}
+                ? "Heaven — now playing"
+                : "Heaven — paused"}
           </span>
         </span>
       </button>

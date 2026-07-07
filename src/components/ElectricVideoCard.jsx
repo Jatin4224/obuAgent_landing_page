@@ -30,6 +30,7 @@ export default function ElectricVideoCard({
                 title={title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
+                loading="lazy"
                 className="aspect-video h-full w-full"
               />
             ) : (
